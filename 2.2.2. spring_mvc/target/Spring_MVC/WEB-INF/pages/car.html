@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cars</title>
+</head>
+<body>
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <th>model</th>
+                <th>series</th>
+            </tr>
+            <tr th:each="cars, state : ${cars}"
+                class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+                <td th:utext = "${state.count}">id</td>
+                <td th:utext = "${cars.model}">model</td>
+                <td th:utext = "${cars.series}">series</td>
+            </tr>
+        </table>
+</body>
+</html>
