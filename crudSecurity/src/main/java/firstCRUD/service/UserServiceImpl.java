@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByName(name);
     }
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     @Override
     public void createRole(Set<Role> roles) {
         roleDao.createRole(roles);
