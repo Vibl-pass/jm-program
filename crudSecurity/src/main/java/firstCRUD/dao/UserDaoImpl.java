@@ -13,14 +13,12 @@ public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     EntityManager entityManager;
-
-    @Transactional
+    
     @Override
     public void createUser(User user) {
         entityManager.persist(user);
     }
 
-    @Transactional
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
@@ -29,19 +27,16 @@ public class UserDaoImpl implements UserDao {
                 .getResultList();
     }
 
-    @Transactional
     @Override
     public void updateUser(User user) {
         entityManager.merge(user);
     }
 
-    @Transactional
     @Override
     public void deleteUser(Long id) {
         entityManager.remove(getUserById(id));
     }
 
-    @Transactional
     @Override
     public User getUserByName(String name) {
         return (User) entityManager
@@ -50,7 +45,6 @@ public class UserDaoImpl implements UserDao {
                 .getSingleResult();
     }
 
-    @Transactional
     @Override
     public User getUserById(Long id) {
         return (User) entityManager

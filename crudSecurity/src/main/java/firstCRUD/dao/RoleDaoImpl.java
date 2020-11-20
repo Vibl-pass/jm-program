@@ -16,13 +16,11 @@ public class RoleDaoImpl implements RoleDao {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Transactional
     @Override
     public void createRole(Set<Role> roles) {
         roles.forEach(role -> entityManager.persist(role));
     }
 
-    @Transactional
     @Override
     public Set<Role> getAllRoles() {
         Set<Role> setRoles = new HashSet<>();
