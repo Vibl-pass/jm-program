@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+<div th:fragment="header(user)">
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="navbar-brand">
+                <b><span th:text="${user.email}"></span></b>
+                <span>with roles:</span>
+                <span th:text="${user.getStringRoles}"></span>
+            </div>
+            <div class="navbar-nav" sec:authorize="isAuthenticated()">
+                <a class="mav-item nav-link" href="/logout">Logout</a>
+            </div>
+        </nav>
+    </header>
+</div>
+
+<div th:fragment="edit">
+    <div class="modal fade"
+         id="editModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit_form">
+                        <input type="text" name="edit_id" id="edit_id" hidden>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Username</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="edit_username"
+                                       id="edit_username"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Password</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="edit_password"
+                                       id="edit_password"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Name</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="edit_name"
+                                       id="edit_name"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Last name</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="edit_lastName"
+                                       id="edit_lastName"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Email</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="edit_email"
+                                       id="edit_email"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Roles</p>
+                                <select name="edit_roles"
+                                        class="form-control"
+                                        id="edit_roles"
+                                        size="2"
+                                        multiple
+                                        required>
+                                    <option value="ROLE_ADMIN">ADMIN</option>
+                                    <option value="ROLE_USER">USER</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
+                            <button type="submit"
+                                    class="btn btn-primary">Edit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="delete">
+    <div class="modal fade"
+         id="deleteModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="delete_form">
+                        <input type="text" name="delete_id" id="delete_id" hidden>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Username</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="delete_username"
+                                       id="delete_username"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Password</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="delete_password"
+                                       id="delete_password"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Name</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="delete_name"
+                                       id="delete_name"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Last name</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="delete_lastName"
+                                       id="delete_lastName"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Email</p>
+                                <input type="text"
+                                       class="form-control"
+                                       name="delete_email"
+                                       id="delete_email"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group col-md-6">
+                                <p class="text-center font-weight-bold mb-md-0">Roles</p>
+                                <select name="delete_roles"
+                                        class="form-control"
+                                        id="delete_roles"
+                                        size="2"
+                                        multiple
+                                        disabled>
+                                    <option value="ROLE_ADMIN">ADMIN</option>
+                                    <option value="ROLE_USER">USER</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-dismiss="modal">Close</button>
+                            <button type="submit"
+                                    class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
