@@ -17,18 +17,19 @@ public class UserDaoImpl implements UserDao{
         return entityManager.createQuery("FROM User").getResultList();
     }
 
-    public void add(User user) {
+    public User add(User user) {
         if(user.getId() == null) {
             entityManager.persist(user);
         } else entityManager.merge(user);
+        return user;
     }
 
     public void delete(Long id) {
-        entityManager.remove(entityManager.find(User.class, (long)id));
+        entityManager.remove(entityManager.find(User.class, id));
     }
 
     public User showUser(Long id) {
-        return entityManager.find(User.class, (long)id);
+        return entityManager.find(User.class, id);
     }
 
     @SuppressWarnings("unchecked")

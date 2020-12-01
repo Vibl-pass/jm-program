@@ -7,9 +7,9 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    boolean add(User user);
+    User add(User user);
     List<User> listUsers();
     User showUser (Long id);
-    boolean delete(Long id);
+    void delete(Long id);
     User findUserByUsername(String username);
 }

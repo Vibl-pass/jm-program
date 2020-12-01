@@ -30,21 +30,19 @@ public class UserServiceImpl implements UserService{
     }
     @Transactional
     @Override
-    public boolean add(User user) {
+    public User add(User user) {
         user.setRoles(
                 user.getRoles()
                         .stream()
                         .map(role -> roleRepository.findByRole(role.getRole()))
                         .collect(Collectors.toList())
         );
-        userDao.add(user);
-        return true;
+       return userDao.add(user);
     }
     @Transactional
     @Override
-    public boolean delete(Long id) {
+    public void delete(Long id) {
         userDao.delete(id);
-        return true;
     }
     @Transactional
     @Override
